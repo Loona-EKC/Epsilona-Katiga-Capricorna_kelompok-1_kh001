@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'theme/app_theme.dart';
+import 'widgets/buttons.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -9,79 +12,63 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Kartu Mahasiswa',
-      home: HalamanUtama(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      home: const HomePage(),
     );
   }
 }
 
-class HalamanUtama extends StatelessWidget {
-  const HalamanUtama({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Latar belakang warna pastel
-      backgroundColor: const Color(0xFFFFE5EC),
-      // Kartu diposisikan di tengah layar
-      body: const Center(
-        child: KartuMahasiswa(
-          nama: "Epsilona Katiga Capricorna",              // ganti dengan nama Anda
-          nim: "20230801345",              // ganti dengan NIM Anda
-          programStudi: "Teknik Informatika", // ganti dengan prodi Anda
+      appBar: AppBar(
+        title: const Text('Design System Demo'),
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Universitas Esa Unggul',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            const Text(
+              'Tekan tombol di bawah untuk melihat lokasi kampus.',
+            ),
+
+            const SizedBox(height: 24),
+
+            AppButton(
+              label: 'Buka Google Maps',
+              icon: Icons.location_on,
+              url:
+              'https://www.google.com/maps/search/?api=1&query=Universitas+Esa+Unggul',
+            ),
+
+            const SizedBox(height: 16),
+
+            AppButton(
+              label: 'Tes Tombol',
+              icon: Icons.touch_app,// anda bisa menambahkan url: tergantung apakah wajib atau tidak di buttons.dart
+              onPressed: () {
+                debugPrint('Tombol berhasil ditekan!');
+              },
+            ),
+          ],
         ),
-      ),
-    );
-  }
-}
-
-class KartuMahasiswa extends StatelessWidget {
-  final String nama;
-  final String nim;
-  final String programStudi;
-
-  const KartuMahasiswa({
-    super.key,
-    required this.nama,
-    required this.nim,
-    required this.programStudi,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 1.0,
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.15),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "KARTU MAHASISWA",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          const Divider(),
-          const Text("Nama", style: TextStyle(color: Colors.grey)),
-          Text(nama, style: const TextStyle(fontSize: 18)),
-          const Divider(),
-          const Text("NIM", style: TextStyle(color: Colors.grey)),
-          Text(nim, style: const TextStyle(fontSize: 18)),
-          const Divider(),
-          const Text("Program Studi", style: TextStyle(color: Colors.grey)),
-          Text(programStudi, style: const TextStyle(fontSize: 18)),
-        ],
       ),
     );
   }
